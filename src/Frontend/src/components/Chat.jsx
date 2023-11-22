@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaArrowUp } from 'react-icons/fa6';
 
 const Chat = () => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(null);
 
   return (
     <div className='w-full'>
@@ -21,7 +21,7 @@ const Chat = () => {
             onInput={(event) => setMessage(event.target.value)} 
           />
           {
-            message === '' ? (
+            message === null|| message === '' ? (
               <button className='w-[30px] h-[30px] ml-3 bg-[#494A54] rounded-lg justify-center items-center'>
                 <div className='flex justify-center items-center text-[#2F303A]'>
                   <FaArrowUp />

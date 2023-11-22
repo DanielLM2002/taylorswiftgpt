@@ -26,7 +26,7 @@ const Login = () => {
         onInput={(event) => setPassword(event.target.value)} 
       />
       <button className='w-full my-4 px-4 py-3 rounded-2xl bg-[#AE224C] hover:bg-[#8C1631]'>Log in</button>
-      <div className='bg-[#464652] h-0.5 rounded-2xl'></div>
+      <div className='bg-[#464652] h-[1px] rounded-2xl'></div>
       <button className='flex w-full my-4 px-4 py-3 rounded-2xl bg-[#AE224C] justify-center hover:bg-[#8C1631]'>
         <IoLogoGoogle size={'25px'}/>
         <p className='mx-2'>Continue with Google</p>

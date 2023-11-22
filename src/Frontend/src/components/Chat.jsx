@@ -15,20 +15,20 @@ const Chat = () => {
       <div className='ml-[27%] mr-[26.5%] mt-5'>
         <div className='w-full px-4 py-3 border border-[#464652] bg-[#343541] rounded-2xl'>
           <input 
-            className='w-[95.8%] bg-[#343541] focus:outline-none'
+            className='w-[94%] bg-[#343541] focus:outline-none'
             type='text' 
             placeholder='Message TaylorSwiftGPT...'
             onInput={(event) => setMessage(event.target.value)} 
           />
           {
             message === '' ? (
-              <button className='w-[30px] h-[30px] bg-[#494A54] rounded-lg justify-center items-center'>
+              <button className='w-[30px] h-[30px] ml-3 bg-[#494A54] rounded-lg justify-center items-center'>
                 <div className='flex justify-center items-center text-[#2F303A]'>
                   <FaArrowUp />
                 </div>
               </button>
             ) : (
-              <button className='w-[30px] h-[30px] bg-[#FFFFFF] rounded-lg justify-center items-center'>
+              <button className='w-[30px] h-[30px] ml-3 bg-[#FFFFFF] rounded-lg justify-center items-center'>
                 <div className='flex justify-center items-center text-[#2F303A]'>
                   <FaArrowUp />
                 </div>

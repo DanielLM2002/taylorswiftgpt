@@ -23,8 +23,9 @@ const Login = () => {
     try {
       event.preventDefault();
       await login(email, password);
-      setTimeout(() => navigate('/home'), 1000);
+      navigate('/home');
     } catch (error) {
+      setShowNotification(true);
       setNotification({ type: 'error', message: 'Invalid credentials'}); 
     }
   };

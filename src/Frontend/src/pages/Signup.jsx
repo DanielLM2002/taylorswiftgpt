@@ -23,13 +23,14 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      setShowNotification(true);
       await signup(email, password);
       setNotification({ type: 'success', message: 'User created successfully'});
+      setShowNotification(true);
       setTimeout(() => navigate('/home'), 2000);
     } catch (error) {
-      const { code } = error
+      const { code } = error;
       const message = code === 'auth/weak-password' ? 'Invalid password' : 'Email is already in use';
+      setShowNotification(true);
       setNotification({ type: 'error', message}); 
     }
   };

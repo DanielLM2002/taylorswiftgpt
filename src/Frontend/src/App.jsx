@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Layout from './layouts/Layout';
+import AuthLayout from './layouts/AuthLayout';
 
 import AuthProvider from './context/authProvider';
 
@@ -13,10 +14,12 @@ const App = () => {
       <AuthProvider>
         <Routes>
           <Route path='/' element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path='/login' element={<Login />} />
+            <Route index path='/login' element={<Login />} />
             <Route path='/signup' element={<Signup />} />
-            <Route path='/home' element={<Home />} />
+            {/* <Route index path='/home' element={<Home />} /> */}
+          </Route>
+          <Route path='/home' element={<AuthLayout />}>
+            <Route index path='/home' element={<Home />} />
           </Route>
         </Routes>
       </AuthProvider>

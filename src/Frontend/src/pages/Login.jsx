@@ -1,20 +1,42 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { FaGuitar } from 'react-icons/fa';
 import { IoLogoGoogle } from 'react-icons/io5';
 
+import useAuth from '../hooks/useAuth';
+import Notification from '../components/Notification';
+
 const Login = () => {
+  // States that control the auth values
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
+  // States that control nofification
+  const [showNotification, setShowNotification] = useState(false);
+  const [notification, setNotification] = useState({ type: null, message: null });
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      await login(email, password);
+      setTimeout(() => navigate('/home'), 1000);
+    } catch (error) {
+      setNotification({ type: 'error', message: 'Invalid credentials'}); 
+    }
+  };
+
   return (
-    <form className='flex items-center justify-center h-full'>
+    <form className='flex items-center justify-center h-full' onSubmit={handleSubmit}>
       <div className="flex-wrap w-[500px] p-6 border border-[#464652] rounded-2xl">
         <div className="flex items-center justify-center">
           <FaGuitar className='my-4' size={"50px"} />
         </div>
         <h1 className="text-center text-3xl font-bold mb-5">TaylorSwiftGPT</h1>
+        <Notification type={notification.type} message={notification.message} isVisible={showNotification} />
         <h1 className='text-lg font-bold mt-2 mb-1'>Email</h1>
         <input
           className='bg-[#343541] w-full my-1 px-4 py-3 border border-[#464652] rounded-2xl focus:outline-none'

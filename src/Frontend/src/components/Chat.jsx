@@ -9,13 +9,13 @@ const Chat = () => {
       <div className='flex h-16 w-full px-5 items-center sticky top-0 bg-[#343541]'>
         <h1 className='text-lg font-bold'>TaylorSwiftGPT</h1>
       </div>
-      <div className='min-h-[82%] flex flex-col items-center justify-center ml-[27%] mr-[26.5%] overflow-auto scroll-snap-type-y mandatory'>
+      <div className='min-h-[78%] flex flex-col items-center justify-center ml-[27%] mr-[26.5%] overflow-auto scroll-snap-type-y mandatory'>
         <h1 className='text-5xl font-bold'>TaylorSwiftGPT</h1>
       </div>
       <div className='ml-[27%] mr-[26.5%] mt-5'>
         <div className='w-full px-4 py-3 border border-[#464652] bg-[#343541] rounded-2xl'>
           <input 
-            className='w-[94%] bg-[#343541] focus:outline-none'
+            className='w-[92%] bg-[#343541] focus:outline-none'
             type='text' 
             placeholder='Message TaylorSwiftGPT...'
             onInput={(event) => setMessage(event.target.value)} 

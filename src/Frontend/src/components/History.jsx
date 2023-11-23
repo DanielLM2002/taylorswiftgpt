@@ -15,7 +15,7 @@ const History = () => {
         <h1 className='text-sm mx-2'>New chat</h1>
         <LuPenSquare className='ml-[100px]' size={'15px'} />
       </div>
-      <div className='h-[90.5%]'>
+      <div className='h-[89%]'>
 
       </div>
       <div 

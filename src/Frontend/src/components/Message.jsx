@@ -31,7 +31,7 @@ const Message = (props) => {
         ) : (
           <div>
             <div className='flex'>
-              <FaGuitar size={'24px'} />
+              <FaGuitar className='text-[#AE224C]' size={'24px'} />
               <h1 className='mx-3 font-bold'>TylorSwiftGPT</h1>
             </div>
             <div className='py-2 text-justify'>

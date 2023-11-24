@@ -6,22 +6,25 @@ import Signup from './pages/Signup';
 import Layout from './layouts/Layout';
 import AuthLayout from './layouts/AuthLayout';
 
-import AuthProvider from './context/authProvider';
+import AuthProvider from './context/AuthContext/authProvider';
+import DataBaseProvider from './context/DataBaseContext/dataBaseProvider';
 
 const App = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<Signup />} />
-          </Route>
-          <Route path='/' element={<AuthLayout />}>
-            <Route index path='/' element={<Navigate to='/home' />} />
-            <Route index path='/home' element={<Home />} />
-          </Route>
-        </Routes>
+        <DataBaseProvider>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path='/login' element={<Login />} />
+              <Route path='/signup' element={<Signup />} />
+            </Route>
+            <Route path='/' element={<AuthLayout />}>
+              <Route index path='/' element={<Navigate to='/home' />} />
+              <Route index path='/home' element={<Home />} />
+            </Route>
+          </Routes>
+        </DataBaseProvider>
       </AuthProvider>
     </BrowserRouter>
   );

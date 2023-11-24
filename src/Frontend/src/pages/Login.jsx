@@ -41,7 +41,7 @@ const Login = () => {
   };
 
   return (
-    <form className='flex items-center justify-center h-full' onSubmit={handleSubmit}>
+    <form className='flex items-center justify-center h-screen bg-[#343541] text-white' onSubmit={handleSubmit}>
       <div className="flex-wrap w-[500px] p-6 border border-[#464652] rounded-2xl">
         <div className="flex items-center justify-center">
           <FaGuitar className='my-4' size={"50px"} />

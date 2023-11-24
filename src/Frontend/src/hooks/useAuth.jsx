@@ -24,11 +24,15 @@ import {
 } from 'firebase/firestore';
 
 import { firebaseAuth, firestore } from '../config/firebase';
-import authContext from '../context/authContext';
+import authContext from '../context/AuthContext/authContext';
+import dataBaseContext from '../context/DataBaseContext/databaseContext';
+// import useDataBase from './useDataBase';
 
 const useAuth = () => {
   const AuthContext = useContext(authContext);
-  const { setUserCredentials, setSession, setCurrentChat } = AuthContext;
+  const DataBaseContext = useContext(dataBaseContext);
+  const { setUserCredentials } = AuthContext;
+  const { setSession, setCurrentChat } = DataBaseContext;
 
   const signup = (email, password) => createUserWithEmailAndPassword(firebaseAuth, email, password);
   const login = (email, password) => signInWithEmailAndPassword(firebaseAuth, email, password);

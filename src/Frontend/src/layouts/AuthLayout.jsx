@@ -11,9 +11,7 @@ const AuthLayout = () => {
 
   if (userCredentials) {
     return (
-      <main className='bg-[#343541] font-sans text-white h-screen'>
-        <Outlet />
-      </main>
+      <Outlet />
     );
   }
 };

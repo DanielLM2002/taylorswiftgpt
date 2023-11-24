@@ -3,7 +3,7 @@ import History from '../components/History';
 
 const Home = () => {
   return (
-    <div className='flex h-full max-h-[1080px]'>
+    <div className='flex h-screen text-white'>
       <History />
       <Chat />
     </div>

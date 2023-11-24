@@ -1,22 +1,19 @@
 import { useState } from 'react';
-import authContext from './authContext';
+import dataBaseContext from './databaseContext';
 
-const AuthProvider = (props) => {
+const DataBaseProvider = (props) => {
   const { children } = props;
-  const [userCredentials, setUserCredentials] = useState(undefined);
+  const { Provider } = dataBaseContext;
   const [session, setSession] = useState(undefined);
   const [currentChat, setCurrentChat] = useState(null);
-  const { Provider } = authContext;
 
   return (
     <Provider
       value={{
-        userCredentials,
-        setUserCredentials,
         session,
         setSession,
         currentChat,
-        setCurrentChat
+        setCurrentChat        
       }}
     >
       { children }
@@ -24,4 +21,4 @@ const AuthProvider = (props) => {
   );
 };
 
-export default AuthProvider;
+export default DataBaseProvider;

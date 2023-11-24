@@ -2,14 +2,13 @@ import { useState } from 'react';
 import { FaArrowUp } from 'react-icons/fa6';
 
 import Message from './Message';
-import useAuth from '../hooks/useAuth';
+import useDataBase from '../hooks/useDataBase';
 
 const Chat = () => {
   const [message, setMessage] = useState(null);
-  const { AuthContext:{ currentChat }} = useAuth();
-
+  const { DataBaseContext: { currentChat } } = useDataBase();
   return (
-    <div className='w-full'>
+    <div className='w-full bg-[#343541]'>
       <div className='flex h-16 w-full px-5 items-center sticky top-0 bg-[#343541]'>
         <h1 className='text-lg font-bold'>TaylorSwiftGPT</h1>
       </div>

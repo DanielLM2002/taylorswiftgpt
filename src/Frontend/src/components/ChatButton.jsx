@@ -1,12 +1,12 @@
 import { MdDelete } from 'react-icons/md';
-import useAuth from '../hooks/useAuth';
+import useDataBase from '../hooks/useDataBase';
 
 const ChatButton = (props) => {
   const { chat, title } = props;
-  const { AuthContext: {
+  const { DataBaseContext: {
     currentChat,
     setCurrentChat
-  } } = useAuth();
+  } } = useDataBase();
 
   return (
     <div className={`flex my-1 items-center px-3 py-2 rounded-lg cursor-pointer hover:bg-[#202123] text-white ${chat && currentChat && currentChat.id === chat.id && 'bg-[#202123]'}`}>

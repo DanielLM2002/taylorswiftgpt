@@ -8,31 +8,17 @@ import {
   signInWithPopup 
 } from 'firebase/auth';
 
-import {
-  doc,
-  onSnapshot,
-  updateDoc,
-  setDoc,
-  deleteDoc,
-  collection,
-  serverTimestamp,
-  getDocs,
-  query,
-  where,
-  orderBy,
-  limit
-} from 'firebase/firestore';
-
-import { firebaseAuth, firestore } from '../config/firebase';
+import { firebaseAuth } from '../config/firebase';
 import authContext from '../context/AuthContext/authContext';
 import dataBaseContext from '../context/DataBaseContext/databaseContext';
-// import useDataBase from './useDataBase';
+import useDataBase from './useDataBase';
 
 const useAuth = () => {
   const AuthContext = useContext(authContext);
   const DataBaseContext = useContext(dataBaseContext);
   const { setUserCredentials } = AuthContext;
   const { setSession, setCurrentChat } = DataBaseContext;
+  const { handleSession } = useDataBase();
 
   const signup = (email, password) => createUserWithEmailAndPassword(firebaseAuth, email, password);
   const login = (email, password) => signInWithEmailAndPassword(firebaseAuth, email, password);
@@ -44,18 +30,6 @@ const useAuth = () => {
     signOut(firebaseAuth);
     setSession(undefined);
     setCurrentChat(null);
-  };
-
-  const handleSession = async (id) => {
-    const _collection = collection(firestore, 'session');
-    let session = null;
-    const docs = await getDocs(_collection, where('id', '==', id));
-    docs.forEach(doc => {
-      if (doc.id === id) {
-        session = {...doc.data(), id:doc.id}
-      }
-    });
-    setSession(session);
   };
 
   useEffect(() => {

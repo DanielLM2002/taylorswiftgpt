@@ -3,7 +3,9 @@ import {
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword,
   onAuthStateChanged, 
-  signOut 
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup 
 } from 'firebase/auth';
 
 import firebaseAuth from '../config/firebase';
@@ -14,9 +16,11 @@ const useAuth = () => {
   const { setUserCredentials } = AuthContext;
 
   const signup = (email, password) => createUserWithEmailAndPassword(firebaseAuth, email, password);
-
   const login = (email, password) => signInWithEmailAndPassword(firebaseAuth, email, password);
-
+  const loginWithGoogle = async () => {
+    const googleProvider = new GoogleAuthProvider();
+    await signInWithPopup(firebaseAuth, googleProvider);
+  };
   const logout = () => signOut(firebaseAuth);
 
   useEffect(() => {
@@ -28,6 +32,7 @@ const useAuth = () => {
     AuthContext,
     signup,
     login,
+    loginWithGoogle,
     logout 
   };
 };

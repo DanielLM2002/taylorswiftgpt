@@ -63,11 +63,6 @@ const Signup = () => {
         >
           Sign up
         </button>
-        <div className='bg-[#464652] h-[1px] rounded-2xl'></div>
-        <button className='flex w-full my-4 px-4 py-3 rounded-2xl bg-[#AE224C] justify-center hover:bg-[#8C1631]'>
-          <IoLogoGoogle size={'25px'}/>
-          <p className='mx-2'>Continue with Google</p>
-        </button>
       </div>
     </form>
   );

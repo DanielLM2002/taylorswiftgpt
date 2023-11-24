@@ -16,7 +16,7 @@ const Login = () => {
   const [showNotification, setShowNotification] = useState(false);
   const [notification, setNotification] = useState({ type: null, message: null });
 
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -27,6 +27,16 @@ const Login = () => {
     } catch (error) {
       setShowNotification(true);
       setNotification({ type: 'error', message: 'Invalid credentials'}); 
+    }
+  };
+
+  const handleGoogleSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      await loginWithGoogle();
+      navigate('/home');
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -55,7 +65,10 @@ const Login = () => {
         </Link>
         <button className='w-full my-4 px-4 py-3 rounded-2xl bg-[#AE224C] hover:bg-[#8C1631]'>Log in</button>
         <div className='bg-[#464652] h-[1px] rounded-2xl'></div>
-        <button className='flex w-full my-4 px-4 py-3 rounded-2xl bg-[#AE224C] justify-center hover:bg-[#8C1631]'>
+        <button 
+          className='flex w-full my-4 px-4 py-3 rounded-2xl bg-[#AE224C] justify-center hover:bg-[#8C1631]'
+          onClick={handleGoogleSubmit}
+        >
           <IoLogoGoogle size={'25px'}/>
           <p className='mx-2'>Continue with Google</p>
         </button>

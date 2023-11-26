@@ -13,11 +13,17 @@ import authContext from '../context/AuthContext/authContext';
 import dataBaseContext from '../context/DataBaseContext/databaseContext';
 import useDataBase from './useDataBase';
 
+import { 
+  SESSION,
+  CURRENT_CHAT,
+  USER_CREDENTIALS 
+} from '../types';
+
 const useAuth = () => {
   const AuthContext = useContext(authContext);
   const DataBaseContext = useContext(dataBaseContext);
-  const { setUserCredentials } = AuthContext;
-  const { setSession, setCurrentChat } = DataBaseContext;
+  const { userCredentials, setAuthContextState } = AuthContext;
+  const { setDataBaseContextState } = DataBaseContext;
   const { handleSession } = useDataBase();
 
   const signup = (email, password) => createUserWithEmailAndPassword(firebaseAuth, email, password);
@@ -28,14 +34,16 @@ const useAuth = () => {
   };
   const logout = () => {
     signOut(firebaseAuth);
-    setSession(undefined);
-    setCurrentChat(null);
+    setDataBaseContextState(SESSION, undefined);
+    setDataBaseContextState(CURRENT_CHAT, null);
   };
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(firebaseAuth, currentUser => {
-      setUserCredentials(currentUser);
-      handleSession(currentUser.uid);
+      setAuthContextState(USER_CREDENTIALS, currentUser);
+      if (!userCredentials || userCredentials === undefined) {
+        handleSession(currentUser.uid);
+      }
     });
     return () => unSubscribe();
   }, []);

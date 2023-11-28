@@ -6,6 +6,7 @@ const DataBaseProvider = (props) => {
   const { children } = props;
   const { Provider } = dataBaseContext;
   const initState = {
+    temperature: 5,
     currentChat: null,
     session: undefined
   };
@@ -19,6 +20,7 @@ const DataBaseProvider = (props) => {
   return (
     <Provider
       value={{
+        temperature: state.temperature,
         session: state.session,
         currentChat: state.currentChat,
         setDataBaseContextState        

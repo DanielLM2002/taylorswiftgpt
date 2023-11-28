@@ -1,4 +1,4 @@
-import { SESSION, CURRENT_CHAT } from '../../types';
+import { SESSION, CURRENT_CHAT, TEMPERATURE } from '../../types';
 
 export default (state, action) => {
   const { type, payload } = action;
@@ -13,6 +13,12 @@ export default (state, action) => {
       return {
         ...state,
         currentChat: payload
+      };
+    } break;
+    case TEMPERATURE: {
+      return {
+        ...state,
+        temperature: payload
       };
     } break;
   };

@@ -21,7 +21,7 @@ const History = () => {
         <h1 className='text-sm mx-2'>New chat</h1>
         <LuPenSquare className='ml-[100px]' size={'18px'} />
       </div>
-      <div className='h-[84.5%] py-8'>
+      <div className='h-[79%] py-8'>
         { 
           session && session.chats.map((chat, index) => <ChatButton chat={chat} key={chat.id} title={`Chat #${index + 1}`} />)
         }

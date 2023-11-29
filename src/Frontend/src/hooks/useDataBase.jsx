@@ -66,7 +66,7 @@ const useDataBase = () => {
       setDataBaseContextState(CHATS, newChats);
       setDataBaseContextState(CURRENT_CHAT, newChat);
     } else {
-      const _doc = doc(firestore, _collection, chatId) 
+      const _doc = doc(firestore, _collection, chatId); 
       const newChat = newChats.filter(chat => chat.id == chatId)[0];
       newChat.questions.push(newQuestion);
       newChats.map(chat => {
@@ -100,6 +100,22 @@ const useDataBase = () => {
     await deleteDoc(doc(firestore, _collection, id));
   };
 
+  const renameChat = async (id, newName) => {
+    if (newName !== '') {
+      const newChats = [ ...chats ];
+      const modifiedChat = chats.filter(chat => chat.id == id)[0];
+      modifiedChat.name = newName;
+      newChats.map(chat => {
+        if (chat.id == id) {
+          chat = modifiedChat;
+        }
+      });
+      setDataBaseContextState(CHATS, newChats);
+      const _doc = doc(firestore, _collection, id);
+      await updateDoc(_doc, modifiedChat);
+    }
+  };
+
   const getCollectionData = async (id) => {
     const dataCollection = collection(firestore, id);
     setDataBaseContextState(COLLECTION, id);
@@ -113,7 +129,8 @@ const useDataBase = () => {
     addChat,
     addQuestion,
     changeCurrentChat,
-    deleteChat
+    deleteChat,
+    renameChat
   };
 };
 

@@ -26,8 +26,18 @@ const User = () => {
     event.preventDefault();
     if (newTemperature && newTemperature !== '') {
       setDataBaseContextState(TEMPERATURE, newTemperature);
+    } else {
+      setNewTemperature(temperature);
     }
     setEditTemperature(false);
+  };
+
+  const handleInput = (event) => {
+    const regex = /^[0-9.]*$/;
+    const value = event.target.value;
+    if (value.match(regex)) {
+      setNewTemperature(value);
+    }
   };
   
   return (
@@ -51,15 +61,11 @@ const User = () => {
                 >
                   <FaTemperatureHalf size={'18px'}/>
                   <input 
-                    type='text' 
+                    type='text'
                     placeholder={temperature}
+                    value={newTemperature}
                     className='w-[80%] mx-2 bg-[#202123] focus:outline-none'
-                    onInput={(event) => {
-                      const value = parseFloat(event.target.value);
-                      if (typeof value === 'number') {
-                        setNewTemperature(value)
-                      }
-                    }}
+                    onInput={handleInput}
                   />
                   <button className='hover:text-[#AE224C]'>
                     <FaCircleCheck size={'18px'} />
@@ -79,7 +85,13 @@ const User = () => {
       }
       <div 
         className={`flex items-center px-1.5 py-2 rounded-lg cursor-pointer hover:bg-[#202123] ${options ? 'bg-[#202123]' : 'bg-[#000000]'}`}
-        onClick={() => setOptions(!options)}
+        onClick={() => {
+          setOptions(!options);
+          if (editTemperature) {
+            setEditTemperature(false);
+            setNewTemperature(temperature);
+          }
+        }}
       >
         {
           displayName ? (

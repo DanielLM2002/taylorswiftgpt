@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { FaGuitar } from 'react-icons/fa6';
 import { LuPenSquare } from 'react-icons/lu';
+import icon from '../../assets/icon.svg';
 
 import User from './User';
 import ChatButton from './ChatButton';
@@ -17,9 +17,11 @@ const History = () => {
         className='flex items-center rounded-lg px-1.5 py-2 cursor-pointer hover:bg-[#202123]'
         onClick={addChat}
       >
-        <FaGuitar size={'28px'}/>
+        <div className='w-[28px] h-[28px] flex items-center rounded-full bg-[#FFFFFF] p-1'>
+          <img src={icon} />
+        </div>
         <h1 className='text-sm mx-2'>New chat</h1>
-        <LuPenSquare className='ml-[100px]' size={'18px'} />
+        <LuPenSquare className='ml-[100px]' size={'16px'} />
       </div>
       <div className='h-[79%] py-8'>
         { 

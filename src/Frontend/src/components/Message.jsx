@@ -1,4 +1,5 @@
-import { FaCircleUser, FaGuitar } from 'react-icons/fa6';
+import { FaCircleUser } from 'react-icons/fa6';
+import whiteIcon from '../../assets/white-icon.svg';
 
 import useAuth from '../hooks/useAuth';
 
@@ -31,7 +32,9 @@ const Message = (props) => {
         ) : (
           <div>
             <div className='flex'>
-              <FaGuitar className='text-[#AE224C]' size={'24px'} />
+            <div className='w-[24px] h-[24px] flex items-center rounded-full bg-[#AE224C] p-1'>
+              <img src={whiteIcon} />
+            </div>
               <h1 className='mx-3 font-bold'>TylorSwiftGPT</h1>
             </div>
             <div className='py-2 text-justify'>

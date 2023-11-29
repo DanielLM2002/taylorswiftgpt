@@ -89,6 +89,7 @@ const useDataBase = () => {
       deleteChat(currentChat.id);
     }
     setDataBaseContextState(CURRENT_CHAT, chat);
+    document.title = chat.name;
   };
 
   const deleteChat = async (id) => {

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { FaGuitar } from 'react-icons/fa';
-import { IoLogoGoogle } from 'react-icons/io5';
+import whiteIcon from '../../assets/white-icon.svg';
 
 import useAuth from '../hooks/useAuth';
 import Notification from '../components/Notification';
@@ -37,8 +36,10 @@ const Signup = () => {
   return (
     <form className='flex items-center justify-center h-screen bg-[#343541] text-white' onSubmit={handleSubmit}>
       <div className="flex-wrap w-[500px] p-6 border border-[#464652] rounded-2xl">
-        <div className="flex items-center justify-center">
-          <FaGuitar className='my-4' size={"50px"} />
+        <div className='flex w-full items-center justify-center'>
+          <div className='w-[70px] h-[70px] flex items-center rounded-full bg-[#AE224C] p-2 my-3'>
+            <img src={whiteIcon} />
+          </div>
         </div>
         <h1 className="text-center text-3xl font-bold mb-5">TaylorSwiftGPT</h1>
         <Notification type={notification.type} message={notification.message} isVisible={showNotification} />

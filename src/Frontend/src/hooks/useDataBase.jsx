@@ -26,14 +26,15 @@ const useDataBase = () => {
   const handleChats = async (id) => {
     let _chats = [];
     const querySnapshot = await getCollectionData(id);
-    querySnapshot.forEach(doc => _chats.push({...doc.data(), id:doc.id, name: `Chat #${_chats.length + 1}`}));
+    querySnapshot.forEach(doc => _chats.push({...doc.data(), id:doc.id}));
     setDataBaseContextState(CHATS, _chats);
   };
 
-  const addChat = async () => {
+  const addChat = () => {
     const newChats = [ ...chats ];
     const newChat = {
       id: uuidv4(),
+      name: 'New chat',
       questions: []
     };
     newChats.push(newChat);
@@ -50,24 +51,37 @@ const useDataBase = () => {
       content,
       answer: 'Test answer'
     };
-    const newChat = newChats.filter(chat => chat.id == chatId)[0];
-    const _doc = doc(firestore, _collection, chatId);
 
-    newChat.questions.push(newQuestion);
-    newChats.map(chat => {
-      if (chat.id == chatId) {
-        chat.questions = newChat.questions;
-      }
-    });
-
-    if (currentChat.questions.length === 1) {
-      await setDoc(_doc, newChat);
+    if (currentChat === null) {
+      const newChat = addChat();
+      newChat.questions.push(newQuestion);
+      newChats.push(newChat);
+      newChats.map(chat => {
+        if (chat.id == chatId) {
+          chat.questions = newChat.questions;
+        }
+      });
+      const chatAddedDoc = doc(firestore, _collection, newChat.id);
+      await setDoc(chatAddedDoc, newChat);
+      setDataBaseContextState(CHATS, newChats);
+      setDataBaseContextState(CURRENT_CHAT, newChat);
     } else {
-      await updateDoc(_doc, newChat);
+      const _doc = doc(firestore, _collection, chatId) 
+      const newChat = newChats.filter(chat => chat.id == chatId)[0];
+      newChat.questions.push(newQuestion);
+      newChats.map(chat => {
+        if (chat.id == chatId) {
+          chat.questions = newChat.questions;
+        }
+      });
+      if (currentChat.questions.length === 1) {
+        await setDoc(_doc, newChat);
+      } else {
+        await updateDoc(_doc, newChat);
+      }
+      setDataBaseContextState(CHATS, newChats);
+      setDataBaseContextState(CURRENT_CHAT, newChat);
     }
-
-    setDataBaseContextState(CHATS, newChats);
-    setDataBaseContextState(CURRENT_CHAT, newChat);
   };
 
   const changeCurrentChat = (chat) => {
@@ -92,11 +106,6 @@ const useDataBase = () => {
     const querySnapshot = await getDocs(dataCollection);
     return querySnapshot;
   };
-
-  // useEffect(() => {
-  //   // getCollectionData();
-  //   handleSession
-  // }, []);
 
   return {
     DataBaseContext,

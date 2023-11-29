@@ -31,7 +31,7 @@ const ChatButton = (props) => {
         {
           rename ? (
             <form 
-              className='flex my-1 items-center px-3 py-2 rounded-lg cursor-pointer bg-[#202123] text-white'
+              className='flex my-1 items-center px-3 py-2 rounded-lg cursor-pointer bg-[#202123] text-white transition duration-50 linear'
               onSubmit={handleRename}
             >
               <input 
@@ -51,7 +51,7 @@ const ChatButton = (props) => {
           ) : (
             <div>
               <div>
-                <div className='flex my-1 items-center px-3 py-2 rounded-lg cursor-pointer bg-[#202123] text-white'>
+                <div className='flex my-1 items-center px-3 py-2 rounded-lg cursor-pointer bg-[#202123] text-white transition duration-50 linear'>
                   <div className='w-full' onClick={() => changeCurrentChat(chat)}>
                     <h1 className='text-sm'>{title}</h1>
                   </div>
@@ -84,7 +84,7 @@ const ChatButton = (props) => {
         }
       </div>
     ) : (
-      <div className={`flex my-1 items-center px-3 py-2 rounded-lg cursor-pointer hover:bg-[#202123] text-white ${chat && currentChat && currentChat.id === chat.id && 'bg-[#202123]'}`}>
+      <div className={`flex my-1 items-center px-3 py-2 rounded-lg cursor-pointer hover:bg-[#202123] text-white transition duration-50 linear ${chat && currentChat && currentChat.id === chat.id && 'bg-[#202123]'}`}>
         <div className='w-full' onClick={() => changeCurrentChat(chat)}>
           <h1 className='text-sm'>{title}</h1>
         </div>

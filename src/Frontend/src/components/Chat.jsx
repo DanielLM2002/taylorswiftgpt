@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { FaArrowUp } from 'react-icons/fa6';
+import icon from '../../assets/icon.svg';
 
 import Message from './Message';
 import useDataBase from '../hooks/useDataBase';
 
 const Chat = () => {
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState('');
   const { 
     DataBaseContext: { currentChat },
     addQuestion,
@@ -14,7 +15,7 @@ const Chat = () => {
 
   const handleInput = (event) => {
     event.preventDefault();
-    if (!currentChat) {
+    if (currentChat === null) {
       const chat = addChat();
       addQuestion(chat.id, message);
     } else {
@@ -32,10 +33,10 @@ const Chat = () => {
       </div>
       {
         currentChat && currentChat.questions.length > 0 ? (
-          <div id='chatContainer' className='h-[81%] overflow-y-scroll'>
+          <div id='chatContainer' className='h-[81%] overflow-y-scroll transition duration-50 linear'>
             {
               currentChat.questions.map(question => {
-                return <div key={question.id}>
+                return <div key={question.id} className='transition duration-50 linear'>
                   <Message type='user' content={question.content} />
                   <Message type='gpt' content={question.answer} />
                 </div>
@@ -43,15 +44,22 @@ const Chat = () => {
             }
           </div>
         ) : (
-          <div className='h-[81%] flex items-center justify-center'>
-            <h1 className='text-5xl font-bold'>TaylorSwiftGPT</h1>
+          <div className='h-[81%] flex items-center justify-center transition duration-50 linear'>
+            <div>
+              <div className='flex w-full items-center justify-center'>
+                <div className='w-[72px] h-[72px] flex items-center rounded-full bg-[#FFFFFF] p-3 my-5'>
+                  <img src={icon} />
+                </div>
+              </div>
+              <h1 className='text-2xl font-bold'>How can I help you today?</h1>
+            </div>
           </div>
         )
       }
       <div className='mt-5 px-5 2xl:px-[27%]'>
         <form 
           onSubmit={handleInput}
-          className='w-full px-4 py-3 border border-[#464652] bg-[#343541] rounded-2xl'
+          className='w-full px-4 py-3 border border-[#464652] bg-[#343541] rounded-2xl transition duration-50 linear'
         >
           <input 
             className='w-[93%] 2xl:w-[94%] bg-[#343541] focus:outline-none'

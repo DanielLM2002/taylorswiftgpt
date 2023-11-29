@@ -13,10 +13,7 @@ const DataBaseProvider = (props) => {
   };
   const [state, dispatch] = useReducer(dataBaseReducer, initState);
 
-  const setDataBaseContextState = (type, payload) => {
-    console.log({type, payload});
-    dispatch({ type, payload });
-  };
+  const setDataBaseContextState = (type, payload) => dispatch({ type, payload });
 
   return (
     <Provider

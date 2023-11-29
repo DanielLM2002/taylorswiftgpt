@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaCircleUser, FaTemperatureHalf } from 'react-icons/fa6';
+import { FaCircleCheck, FaCircleUser, FaTemperatureHalf } from 'react-icons/fa6';
 import { MdOutlineLogout } from 'react-icons/md';
 
 import useAuth from '../hooks/useAuth';
@@ -7,12 +7,9 @@ import useDataBase from '../hooks/useDataBase';
 import { TEMPERATURE } from '../types';
 
 const User = () => {
-  const [newTemperature, setNewTemperature] = useState(null);
-  const [editTemperature, setEditTemperature] = useState(false);
-  const [options, setOptions] = useState(false);
   const { DataBaseContext: { 
-      temperature,
-      setDataBaseContextState 
+    temperature,
+    setDataBaseContextState 
     } 
   } = useDataBase();
   const { logout, AuthContext } = useAuth();
@@ -21,6 +18,9 @@ const User = () => {
     displayName,
     photoURL
   }} = AuthContext;
+  const [newTemperature, setNewTemperature] = useState(temperature);
+  const [editTemperature, setEditTemperature] = useState(false);
+  const [options, setOptions] = useState(false);
 
   const handleTemperature = (event) => {
     event.preventDefault();
@@ -42,7 +42,7 @@ const User = () => {
                   onClick={() => setEditTemperature(true)}
                 >
                   <FaTemperatureHalf size={'18px'}/>
-                  <h1 className='text-sm mx-2'>{`Temperature: ${temperature}`}</h1>
+                  <h1 className='text-sm mx-2'>{`Temperature (${temperature}°)`}</h1>
                 </button>
               ) : (
                 <form 
@@ -51,11 +51,19 @@ const User = () => {
                 >
                   <FaTemperatureHalf size={'18px'}/>
                   <input 
-                    type='number' 
+                    type='text' 
                     placeholder={temperature}
-                    className='w-full ml-2 bg-[#202123] focus:outline-none'
-                    onInput={(event) => setNewTemperature(event.target.value)}
+                    className='w-[80%] mx-2 bg-[#202123] focus:outline-none'
+                    onInput={(event) => {
+                      const value = parseFloat(event.target.value);
+                      if (typeof value === 'number') {
+                        setNewTemperature(value)
+                      }
+                    }}
                   />
+                  <button className='hover:text-[#AE224C]'>
+                    <FaCircleCheck size={'18px'} />
+                  </button>
                 </form>
               )
             }

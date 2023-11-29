@@ -14,7 +14,7 @@ import dataBaseContext from '../context/DataBaseContext/databaseContext';
 import useDataBase from './useDataBase';
 
 import { 
-  SESSION,
+  CHATS,
   CURRENT_CHAT,
   USER_CREDENTIALS 
 } from '../types';
@@ -24,7 +24,7 @@ const useAuth = () => {
   const DataBaseContext = useContext(dataBaseContext);
   const { userCredentials, setAuthContextState } = AuthContext;
   const { setDataBaseContextState } = DataBaseContext;
-  const { handleSession } = useDataBase();
+  const { handleChats } = useDataBase();
 
   const signup = (email, password) => createUserWithEmailAndPassword(firebaseAuth, email, password);
   const login = (email, password) => signInWithEmailAndPassword(firebaseAuth, email, password);
@@ -34,7 +34,7 @@ const useAuth = () => {
   };
   const logout = () => {
     signOut(firebaseAuth);
-    setDataBaseContextState(SESSION, undefined);
+    setDataBaseContextState(CHATS, undefined);
     setDataBaseContextState(CURRENT_CHAT, null);
   };
 
@@ -42,7 +42,7 @@ const useAuth = () => {
     const unSubscribe = onAuthStateChanged(firebaseAuth, currentUser => {
       setAuthContextState(USER_CREDENTIALS, currentUser);
       if (!userCredentials || userCredentials === undefined) {
-        handleSession(currentUser.uid);
+        handleChats(currentUser.uid);
       }
     });
     return () => unSubscribe();

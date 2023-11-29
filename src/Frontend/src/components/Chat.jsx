@@ -22,7 +22,6 @@ const Chat = () => {
     }
     setMessage('');
     const chatContainer = document.querySelector('#chatContainer');
-    console.log(chatContainer);
     chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
   }
 
@@ -33,7 +32,7 @@ const Chat = () => {
       </div>
       {
         currentChat && currentChat.questions.length > 0 ? (
-          <div id='chatContainer' className='h-[81%] overflow-y-scroll scroll-to-bottom-on-load scroll-to-bottom'>
+          <div id='chatContainer' className='h-[81%] overflow-y-scroll'>
             {
               currentChat.questions.map(question => {
                 return <div key={question.id}>

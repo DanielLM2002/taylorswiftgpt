@@ -1,12 +1,18 @@
-import { SESSION, CURRENT_CHAT, TEMPERATURE } from '../../types';
+import { CHATS, COLLECTION, CURRENT_CHAT, TEMPERATURE } from '../../types';
 
 export default (state, action) => {
   const { type, payload } = action;
   switch (type) {
-    case SESSION: {
+    case CHATS: {
       return {
         ...state,
-        session: payload
+        chats: payload
+      };
+    } break;
+    case COLLECTION: {
+      return {
+        ...state,
+        _collection: payload
       };
     } break;
     case CURRENT_CHAT: {

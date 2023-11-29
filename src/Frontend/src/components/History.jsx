@@ -8,7 +8,7 @@ import useDataBase from '../hooks/useDataBase';
 
 const History = () => {
   const { 
-    DataBaseContext: { session },
+    DataBaseContext: { chats },
     addChat
   } = useDataBase();
   return (
@@ -23,7 +23,7 @@ const History = () => {
       </div>
       <div className='h-[79%] py-8'>
         { 
-          session && session.chats.map((chat, index) => <ChatButton chat={chat} key={chat.id} title={`Chat #${index + 1}`} />)
+          chats && chats.map((chat, index) => <ChatButton chat={chat} key={chat.id} title={chat.name} />)
         }
       </div>
       <User />

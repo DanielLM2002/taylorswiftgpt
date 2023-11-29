@@ -8,7 +8,8 @@ const DataBaseProvider = (props) => {
   const initState = {
     temperature: 5,
     currentChat: null,
-    session: undefined
+    _collection: null,
+    chats: undefined
   };
   const [state, dispatch] = useReducer(dataBaseReducer, initState);
 
@@ -21,7 +22,8 @@ const DataBaseProvider = (props) => {
     <Provider
       value={{
         temperature: state.temperature,
-        session: state.session,
+        chats: state.chats,
+        _collection: state._collection,
         currentChat: state.currentChat,
         setDataBaseContextState        
       }}

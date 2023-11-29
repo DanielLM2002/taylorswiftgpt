@@ -23,7 +23,7 @@ const Login = () => {
     try {
       event.preventDefault();
       await login(email, password);
-      navigate('/home');
+      navigate('/taylorswift.ai');
     } catch (error) {
       setShowNotification(true);
       setNotification({ type: 'error', message: 'Invalid credentials'}); 
@@ -34,7 +34,7 @@ const Login = () => {
     try {
       event.preventDefault();
       await loginWithGoogle();
-      navigate('/home');
+      navigate('/taylorswift.ai');
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +44,7 @@ const Login = () => {
     <form className='flex items-center justify-center h-screen bg-[#343541] text-white' onSubmit={handleSubmit}>
       <div className="flex-wrap w-[500px] p-6 border border-[#464652] rounded-2xl">
         <div className='flex w-full items-center justify-center'>
-          <div className='w-[70px] h-[70px] flex items-center rounded-full bg-[#AE224C] p-2 my-3'>
+          <div className='w-[180px] h-[180px] flex items-center rounded-full bg-[#AE224C] p-8 my-5'>
             <img src={whiteIcon} />
           </div>
         </div>

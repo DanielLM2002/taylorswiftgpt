@@ -36,6 +36,7 @@ const useAuth = () => {
     signOut(firebaseAuth);
     setDataBaseContextState(CHATS, undefined);
     setDataBaseContextState(CURRENT_CHAT, null);
+    document.title = 'TaylorSwiftGPT';
   };
 
   useEffect(() => {

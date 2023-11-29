@@ -20,8 +20,8 @@ const App = () => {
               <Route path='/signup' element={<Signup />} />
             </Route>
             <Route path='/' element={<AuthLayout />}>
-              <Route index path='/' element={<Navigate to='/home' />} />
-              <Route index path='/home' element={<Home />} />
+              <Route index path='/' element={<Navigate to='/taylorswift.ai' />} />
+              <Route index path='/taylorswift.ai' element={<Home />} />
             </Route>
           </Routes>
         </DataBaseProvider>

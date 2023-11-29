@@ -24,7 +24,7 @@ const Signup = () => {
       await signup(email, password);
       setNotification({ type: 'success', message: 'User created successfully'});
       setShowNotification(true);
-      setTimeout(() => navigate('/home'), 2000);
+      setTimeout(() => navigate('/taylorswift.ai'), 1000);
     } catch (error) {
       const { code } = error;
       const message = code === 'auth/weak-password' ? 'Invalid password' : 'Email is already in use';
@@ -37,7 +37,7 @@ const Signup = () => {
     <form className='flex items-center justify-center h-screen bg-[#343541] text-white' onSubmit={handleSubmit}>
       <div className="flex-wrap w-[500px] p-6 border border-[#464652] rounded-2xl">
         <div className='flex w-full items-center justify-center'>
-          <div className='w-[70px] h-[70px] flex items-center rounded-full bg-[#AE224C] p-2 my-3'>
+          <div className='w-[180px] h-[180px] flex items-center rounded-full bg-[#AE224C] p-8 my-5'>
             <img src={whiteIcon} />
           </div>
         </div>

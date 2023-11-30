@@ -56,7 +56,7 @@ const Signup = () => {
           onInput={(event) => setPassword(event.target.value)} 
         />
         <Link to='/login'>
-          <p className='mt-3 text-center hover:font-bold hover:text-[#8C1631]'>Already have an account? Log in</p>
+          <p className='mt-3 text-center hover:font-bold hover:text-[#AE224C]'>Already have an account? Log in</p>
         </Link>
         <button 
           type='submit'

@@ -63,7 +63,7 @@ const Login = () => {
           onInput={(event) => setPassword(event.target.value)} 
         />
         <Link to='/signup'>
-          <p className='mt-3 text-center hover:font-bold hover:text-[#8C1631]'>Don't have an account? Sign up</p>
+          <p className='mt-3 text-center hover:font-bold hover:text-[#AE224C]'>Don't have an account? Sign up</p>
         </Link>
         <button className='w-full my-4 px-4 py-3 rounded-2xl bg-[#AE224C] hover:bg-[#8C1631]'>Log in</button>
         <div className='bg-[#464652] h-[1px] rounded-2xl'></div>

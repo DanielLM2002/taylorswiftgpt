@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa6';
 import icon from '../../assets/icon.svg';
 
@@ -6,6 +6,7 @@ import Message from './Message';
 import useDataBase from '../hooks/useDataBase';
 
 const Chat = () => {
+  const bottomRef = useRef(null);
   const [message, setMessage] = useState('');
   const { 
     DataBaseContext: { currentChat },
@@ -26,6 +27,20 @@ const Chat = () => {
     chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
   }
 
+  const insertMessageContainer = () => {
+    const messages = currentChat.questions.map(question => {
+      return <div key={question.id} className='transition duration-50 linear'>
+        <Message type='user' content={question.content} />
+        <Message type='gpt' content={question.answer} />
+      </div>
+    });
+    return messages;
+  };
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+  });
+
   return (
     <div className='w-full bg-[#343541]'>
       <div className='flex h-16 w-full px-5 items-center sticky top-0 bg-[#343541]'>
@@ -34,14 +49,8 @@ const Chat = () => {
       {
         currentChat && currentChat.questions.length > 0 ? (
           <div id='chatContainer' className='h-[81%] overflow-y-scroll transition duration-50 linear'>
-            {
-              currentChat.questions.map(question => {
-                return <div key={question.id} className='transition duration-50 linear'>
-                  <Message type='user' content={question.content} />
-                  <Message type='gpt' content={question.answer} />
-                </div>
-              })
-            }
+            { insertMessageContainer() }
+            <div ref={bottomRef} />
           </div>
         ) : (
           <div className='h-[81%] flex items-center justify-center transition duration-50 linear'>

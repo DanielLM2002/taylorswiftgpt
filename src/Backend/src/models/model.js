@@ -1,7 +1,11 @@
 import tf from '@tensorflow/tfjs-node';
+import data from '../../assets/model.json' assert { type: 'json' };
+//import model from './assets/model.json' assert { type: 'json' };
+
 
 let model;
 const loadModel = async () => {
+    console.log(data);
     model = await tf.loadLayersModel('../../assets/model.json');
 };
 
@@ -26,4 +30,4 @@ const postModel = async (req, res) => {
 };
 
 
-export default { postModel, loadModel };
+export { postModel, loadModel };

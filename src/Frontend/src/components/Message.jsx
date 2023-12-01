@@ -35,7 +35,7 @@ const Message = (props) => {
             <div className='w-[24px] h-[24px] flex items-center rounded-full bg-[#AE224C] p-1'>
               <img src={whiteIcon} />
             </div>
-              <h1 className='mx-3 font-bold'>TylorSwiftGPT</h1>
+              <h1 className='mx-3 font-bold'>TaylorSwiftGPT</h1>
             </div>
             <div className='py-2 text-justify'>
               <p className='ml-9'>{content}</p>

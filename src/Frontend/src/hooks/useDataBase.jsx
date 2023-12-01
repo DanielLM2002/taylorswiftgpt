@@ -11,13 +11,14 @@ import {
 } from 'firebase/firestore';
 
 import dataBaseContext from '../context/DataBaseContext/databaseContext';
-import { CHATS, COLLECTION, CURRENT_CHAT } from '../types';
+import { CHATS, LOADING, COLLECTION, CURRENT_CHAT } from '../types';
 
 const useDataBase = () => {
 
   const DataBaseContext = useContext(dataBaseContext);
   const { 
     chats, 
+    loading,
     _collection,
     currentChat,
     setDataBaseContextState 
@@ -46,15 +47,22 @@ const useDataBase = () => {
   const addQuestion = async (chatId, content) => {
     const questionId = uuidv4(); 
     const newChats = [...chats];
+    setDataBaseContextState(LOADING, true);
     const newQuestion = {
       id: questionId,
       content,
       answer: 'Test answer'
     };
 
+    await setTimeout(() => {
+      setDataBaseContextState(LOADING, false);
+    }, 3000);
+
     if (currentChat === null) {
       const newChat = addChat();
-      newChat.questions.push(newQuestion);
+      await setTimeout(() => {
+        newChat.questions.push(newQuestion);
+      }, 100);
       newChats.push(newChat);
       newChats.map(chat => {
         if (chat.id == chatId) {
@@ -63,8 +71,6 @@ const useDataBase = () => {
       });
       const chatAddedDoc = doc(firestore, _collection, newChat.id);
       await setDoc(chatAddedDoc, newChat);
-      setDataBaseContextState(CHATS, newChats);
-      setDataBaseContextState(CURRENT_CHAT, newChat);
     } else {
       const _doc = doc(firestore, _collection, chatId); 
       const newChat = newChats.filter(chat => chat.id == chatId)[0];
@@ -79,8 +85,6 @@ const useDataBase = () => {
       } else {
         await updateDoc(_doc, newChat);
       }
-      setDataBaseContextState(CHATS, newChats);
-      setDataBaseContextState(CURRENT_CHAT, newChat);
     }
   };
 

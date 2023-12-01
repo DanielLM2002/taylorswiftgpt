@@ -6,6 +6,7 @@ const DataBaseProvider = (props) => {
   const { children } = props;
   const { Provider } = dataBaseContext;
   const initState = {
+    loading: false,
     temperature: 5,
     currentChat: null,
     _collection: null,
@@ -18,6 +19,7 @@ const DataBaseProvider = (props) => {
   return (
     <Provider
       value={{
+        loading: state.loading,
         temperature: state.temperature,
         chats: state.chats,
         _collection: state._collection,

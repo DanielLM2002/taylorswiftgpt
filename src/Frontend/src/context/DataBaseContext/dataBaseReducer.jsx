@@ -1,4 +1,10 @@
-import { CHATS, COLLECTION, CURRENT_CHAT, TEMPERATURE } from '../../types';
+import { 
+  CHATS, 
+  LOADING,
+  COLLECTION, 
+  CURRENT_CHAT, 
+  TEMPERATURE 
+} from '../../types';
 
 export default (state, action) => {
   const { type, payload } = action;
@@ -7,6 +13,12 @@ export default (state, action) => {
       return {
         ...state,
         chats: payload
+      };
+    } break;
+    case LOADING: {
+      return {
+        ...state,
+        loading: payload
       };
     } break;
     case COLLECTION: {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { LuPenSquare } from 'react-icons/lu';
 import icon from '../../assets/icon.svg';
 
@@ -11,6 +11,14 @@ const History = () => {
     DataBaseContext: { chats },
     addChat
   } = useDataBase();
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    if (chats && chats.length > 0) {
+      bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+    }
+  }, [chats]);
+
   return (
     <div className='w-full h-full max-w-[260px] bg-[#000000] px-3 py-3.5'>
       <div 
@@ -23,10 +31,11 @@ const History = () => {
         <h1 className='text-sm mx-2'>New chat</h1>
         <LuPenSquare className='ml-[100px]' size={'16px'} />
       </div>
-      <div className='h-[79%] py-8'>
+      <div className={`h-[79%] py-8 ${ chats && chats.length > 18 && 'overflow-y-auto'}`}>
         { 
           chats && chats.map((chat, index) => <ChatButton chat={chat} key={chat.id} title={chat.name} />)
         }
+        <div ref={bottomRef} />
       </div>
       <User />
     </div>

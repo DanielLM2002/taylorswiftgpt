@@ -38,7 +38,9 @@ const Message = (props) => {
               <h1 className='mx-3 font-bold'>TaylorSwiftGPT</h1>
             </div>
             <div className='py-2 text-justify'>
-              <p className='ml-9'>{content}</p>
+              {
+                content.map((element) => <p className='ml-9'>{element}</p>)
+              }
             </div>
           </div>
         )

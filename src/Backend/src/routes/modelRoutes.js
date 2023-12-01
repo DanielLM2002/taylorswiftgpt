@@ -1,8 +1,8 @@
-import {Router} from 'express';
-import {postModel} from '../models/model.js';
+import { Router } from 'express';
+import { createSong } from '../models/model.js';
 
 const router = Router();
 
-router.post("/taylorswiftmodel",postModel);
+router.post('/taylorswiftmodel', createSong);
 
 export default router;

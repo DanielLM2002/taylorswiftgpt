@@ -55,7 +55,9 @@ const useDataBase = () => {
       content,
       answer: await getSong(content)
     };
-
+    await setTimeout(() => {
+      setDataBaseContextState(LOADING, false);
+    }, 1000);
     if (currentChat === null) {
       const newChat = addChat();
       await setTimeout(() => {
@@ -134,9 +136,6 @@ const useDataBase = () => {
       temperature
     };
     const { data } = await axiosClient.post(url, config);
-    await setTimeout(() => {
-      setDataBaseContextState(LOADING, false);
-    }, 3000);
     return data;
   };
 

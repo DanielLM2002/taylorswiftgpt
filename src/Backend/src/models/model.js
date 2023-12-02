@@ -1,18 +1,18 @@
-import tf from '@tensorflow/tfjs-node';
+// import tf from '@tensorflow/tfjs-node';
 
-let model;
+// let model;
 
-const loadModel = async () => {
-    try {
-      model = await tf.loadLayersModel('/Users/daniellizano/Documents/SegundoSemestre2023/Web/song-generator/src/Backend/src/models/model.json');
-      console.log('Model loaded');
-    }
-    catch (err) {
-      console.log(err);
-    }
-};
+// const loadModel = async () => {
+//     try {
+//       model = await tf.loadLayersModel('/Users/daniellizano/Documents/SegundoSemestre2023/Web/song-generator/src/Backend/src/models/model.json');
+//       console.log('Model loaded');
+//     }
+//     catch (err) {
+//       console.log(err);
+//     }
+// };
 
-loadModel();
+// loadModel();
 
 const createSong = async (req, res) => {
   try {
@@ -64,4 +64,4 @@ const createSong = async (req, res) => {
   }
 };
 
-export { createSong, loadModel };
+export { createSong };

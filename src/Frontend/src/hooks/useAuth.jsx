@@ -10,7 +10,7 @@ import {
 
 import { firebaseAuth } from '../config/firebase';
 import authContext from '../context/AuthContext/authContext';
-import dataBaseContext from '../context/DataBaseContext/databaseContext';
+import dataBaseContext from '../context/DataBaseContext/dataBaseContext';
 import useDataBase from './useDataBase';
 
 import { 

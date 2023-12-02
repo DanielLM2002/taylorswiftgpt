@@ -10,7 +10,7 @@ import {
   updateDoc
 } from 'firebase/firestore';
 
-import dataBaseContext from '../context/DataBaseContext/databaseContext';
+import dataBaseContext from '../context/DataBaseContext/dataBaseContext';
 import { CHATS, LOADING, COLLECTION, CURRENT_CHAT } from '../types';
 
 const useDataBase = () => {

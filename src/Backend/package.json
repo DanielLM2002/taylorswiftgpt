@@ -12,6 +12,7 @@
   "author": "Esteban Castañeda Blanco, Daniel Lizano Morales",
   "license": "ISC",
   "dependencies": {
+    "@tensorflow/tfjs-node": "^4.14.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

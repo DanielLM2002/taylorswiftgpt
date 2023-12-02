@@ -3,8 +3,13 @@ import tf from '@tensorflow/tfjs-node';
 let model;
 
 const loadModel = async () => {
-  //console.log(data);
-  model = await tf.loadLayersModel('/Users/daniellizano/Documents/SegundoSemestre2023/Web/song-generator/src/Backend/src/models/model.json');
+    try {
+      model = await tf.loadLayersModel('/Users/daniellizano/Documents/SegundoSemestre2023/Web/song-generator/src/Backend/src/models/model.json');
+      console.log('Model loaded');
+    }
+    catch (err) {
+      console.log(err);
+    }
 };
 
 loadModel();

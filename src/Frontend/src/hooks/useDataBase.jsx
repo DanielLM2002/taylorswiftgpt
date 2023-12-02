@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useContext, useEffect, useState } from 'react';
 import { firestore } from '../config/firebase';
+import axiosClient from '../config/axiosClient';
 import { 
   collection,
   doc,
@@ -21,6 +22,7 @@ const useDataBase = () => {
     loading,
     _collection,
     currentChat,
+    temperature,
     setDataBaseContextState 
   } = DataBaseContext;
 
@@ -51,41 +53,8 @@ const useDataBase = () => {
     const newQuestion = {
       id: questionId,
       content,
-      answer: [
-        `Thought I found a way`,
-        `Thought I found a way out (found)`,
-        `But you never go away (never go away)`,
-        `So I guess I gotta stay now`,
-        `Oh, I hope some day I'll make it out of here`,
-        `Even if it takes all night or a hundred years`,
-        `Need a place to hide, but I can't find one near`,
-        `Wanna feel alive, outside I can't fight my fear`,
-        `Isn't it lovely, all alone?`,
-        `Heart made of glass, my mind of stone`,
-        `Tear me to pieces, skin to bone`,
-        `Hello, welcome home`,
-        `Walkin' out of time`,
-        `Lookin' for a better place (lookin' for a better place)`,
-        `Something's on my mind (mind)`,
-        `Always in my head space`,
-        `But I know some day I'll make it out of here`,
-        `Even if it takes all night or a hundred years`,
-        `Need a place to hide, but I can't find one near`,
-        `Wanna feel alive, outside I can't fight my fear`,
-        `Isn't it lovely, all alone?`,
-        `Heart made of glass, my mind of stone`,
-        `Tear me to pieces, skin to bone`,
-        `Hello, welcome home`,
-        `Whoa, yeah`,
-        `Yeah, ah`,
-        `Whoa, whoa`,
-        `Hello, welcome home`,
-      ]
+      answer: await getSong(content)
     };
-
-    await setTimeout(() => {
-      setDataBaseContextState(LOADING, false);
-    }, 3000);
 
     if (currentChat === null) {
       const newChat = addChat();
@@ -155,6 +124,20 @@ const useDataBase = () => {
     setDataBaseContextState(COLLECTION, id);
     const querySnapshot = await getDocs(dataCollection);
     return querySnapshot;
+  };
+
+  const getSong = async (question) => {
+    const url = `/taylorswiftmodel/`;
+    const config = {
+      model: 'taylor_swift',
+      messages: [{ start_string: question }],
+      temperature
+    };
+    const { data } = await axiosClient.post(url, config);
+    await setTimeout(() => {
+      setDataBaseContextState(LOADING, false);
+    }, 3000);
+    return data;
   };
 
   return {

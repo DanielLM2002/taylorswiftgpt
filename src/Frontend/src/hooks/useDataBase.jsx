@@ -133,9 +133,9 @@ const useDataBase = () => {
     const config = {
       model: 'taylor_swift',
       messages: [{ start_string: question }],
-      temperature
+      temperature: parseFloat(temperature)
     };
-    const { data } = await axiosClient.post(url, config);
+    const { data } = await axiosClient.post(url, { config });
     return data;
   };
 

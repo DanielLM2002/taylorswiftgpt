@@ -29,6 +29,7 @@ const createSong = async (req, res) => {
   //     prediction: predictionArray
   //   });
   // });
+  console.log(config);
     res.json([
       `Thought I found a way`,
       `Thought I found a way out (found)`,

@@ -7,7 +7,7 @@ const DataBaseProvider = (props) => {
   const { Provider } = dataBaseContext;
   const initState = {
     loading: false,
-    temperature: 5,
+    temperature: 0.5,
     currentChat: null,
     _collection: null,
     chats: undefined

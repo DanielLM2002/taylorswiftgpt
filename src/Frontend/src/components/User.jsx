@@ -24,7 +24,7 @@ const User = () => {
 
   const handleTemperature = (event) => {
     event.preventDefault();
-    if (newTemperature && newTemperature !== '') {
+    if (newTemperature && newTemperature !== '' && newTemperature !== '0' && newTemperature !== '0.') {
       setDataBaseContextState(TEMPERATURE, newTemperature);
     } else {
       setNewTemperature(temperature);
@@ -33,7 +33,7 @@ const User = () => {
   };
 
   const handleInput = (event) => {
-    const regex = /^[0-9.]*$/;
+    const regex = /^(0(\.\d*)?|0\.[1-9]\d*|\.(\d*[1-9])?)?$/;
     const value = event.target.value;
     if (value.match(regex)) {
       setNewTemperature(value);

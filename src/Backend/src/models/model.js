@@ -4,7 +4,7 @@ let model;
 
 const loadModel = async () => {
   //console.log(data);
-  model = await tf.loadLayersModel('file://./model.json');
+  model = await tf.loadLayersModel('/Users/daniellizano/Documents/SegundoSemestre2023/Web/song-generator/src/Backend/src/models/model.json');
 };
 
 loadModel();

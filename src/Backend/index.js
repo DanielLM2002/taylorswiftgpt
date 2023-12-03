@@ -6,22 +6,10 @@ const tf = require('@tensorflow/tfjs-node');
 const fs = require('fs');
 let model;
 
-
-// async function loadModel() {
-//     try {
-//         model = await tf.loadLayersModel('file://model.json'); // Only Total Paths
-//     } catch (error) {
-//         console.error('Error loading model:', error);
-//     }
-// }
 async function loadModel() {
     try {
-        const modelData = await fs.readFileSync("./model.json") 
-        console.log(modelData)// Only Total Paths
-        model = await tf.loadLayersModel(modelData);
-
-    }
-    catch (error) {
+        model = await tf.loadLayersModel('file://./taylor_swift_js/model.json'); // Only Total Paths
+    } catch (error) {
         console.error('Error loading model:', error);
     }
 }

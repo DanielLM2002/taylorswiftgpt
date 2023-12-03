@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useContext, useEffect, useState } from 'react';
 import { firestore } from '../config/firebase';
 import axiosClient from '../config/axiosClient';
-import { 
+import {
   collection,
   doc,
   getDocs,
@@ -17,24 +17,24 @@ import { CHATS, LOADING, COLLECTION, CURRENT_CHAT } from '../types';
 const useDataBase = () => {
 
   const DataBaseContext = useContext(dataBaseContext);
-  const { 
-    chats, 
+  const {
+    chats,
     loading,
     _collection,
     currentChat,
     temperature,
-    setDataBaseContextState 
+    setDataBaseContextState
   } = DataBaseContext;
 
   const handleChats = async (id) => {
     let _chats = [];
     const querySnapshot = await getCollectionData(id);
-    querySnapshot.forEach(doc => _chats.push({...doc.data(), id:doc.id}));
+    querySnapshot.forEach(doc => _chats.push({ ...doc.data(), id: doc.id }));
     setDataBaseContextState(CHATS, _chats);
   };
 
   const addChat = () => {
-    const newChats = [ ...chats ];
+    const newChats = [...chats];
     const newChat = {
       id: uuidv4(),
       name: 'New chat',
@@ -47,7 +47,7 @@ const useDataBase = () => {
   };
 
   const addQuestion = async (chatId, content) => {
-    const questionId = uuidv4(); 
+    const questionId = uuidv4();
     const newChats = [...chats];
     setDataBaseContextState(LOADING, true);
     const newQuestion = {
@@ -72,7 +72,7 @@ const useDataBase = () => {
       const chatAddedDoc = doc(firestore, _collection, newChat.id);
       await setDoc(chatAddedDoc, newChat);
     } else {
-      const _doc = doc(firestore, _collection, chatId); 
+      const _doc = doc(firestore, _collection, chatId);
       const newChat = newChats.filter(chat => chat.id == chatId)[0];
       newChat.questions.push(newQuestion);
       newChats.map(chat => {
@@ -107,7 +107,7 @@ const useDataBase = () => {
 
   const renameChat = async (id, newName) => {
     if (newName !== '') {
-      const newChats = [ ...chats ];
+      const newChats = [...chats];
       const modifiedChat = chats.filter(chat => chat.id == id)[0];
       modifiedChat.name = newName;
       newChats.map(chat => {
@@ -129,14 +129,18 @@ const useDataBase = () => {
   };
 
   const getSong = async (question) => {
-    const url = `/taylorswiftmodel/`;
-    const config = {
-      model: 'taylor_swift',
-      messages: [{ start_string: question }],
-      temperature: parseFloat(temperature)
-    };
-    const { data } = await axiosClient.post(url, { config });
-    return data;
+    try {
+      const url = '/taylorswift/generateSong';
+      const config = {
+        model: 'taylor_swift',
+        messages: [{ start_string: question }],
+        temperature: parseFloat(temperature)
+      };
+      const { data } = await axiosClient.post(url, { config });
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return {

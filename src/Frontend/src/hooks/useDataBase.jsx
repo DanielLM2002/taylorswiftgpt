@@ -33,11 +33,11 @@ const useDataBase = () => {
     setDataBaseContextState(CHATS, _chats);
   };
 
-  const addChat = () => {
+  const addChat = (name) => {
     const newChats = [...chats];
     const newChat = {
       id: uuidv4(),
-      name: 'New chat',
+      name: name ? name.slice(0, 26) : 'New chat',
       questions: []
     };
     newChats.push(newChat);
@@ -59,7 +59,7 @@ const useDataBase = () => {
       setDataBaseContextState(LOADING, false);
     }, 1000);
     if (currentChat === null) {
-      const newChat = addChat();
+      const newChat = addChat(content);
       await setTimeout(() => {
         newChat.questions.push(newQuestion);
       }, 100);
@@ -82,6 +82,7 @@ const useDataBase = () => {
       });
       if (currentChat.questions.length === 1) {
         await setDoc(_doc, newChat);
+        await renameChat(currentChat.id, content);
       } else {
         await updateDoc(_doc, newChat);
       }
@@ -109,7 +110,7 @@ const useDataBase = () => {
     if (newName !== '') {
       const newChats = [...chats];
       const modifiedChat = chats.filter(chat => chat.id == id)[0];
-      modifiedChat.name = newName;
+      modifiedChat.name = newName.slice(0, 26);
       newChats.map(chat => {
         if (chat.id == id) {
           chat = modifiedChat;

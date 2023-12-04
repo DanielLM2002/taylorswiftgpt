@@ -14,47 +14,68 @@ const loadModel = async () => {
   }
 };
 
-const generateText = async (config) => {
+const generateSong = async (config) => {
   try {
     const {
       messages,
       temperature
     } = config;
+
+    const arr = [];
+    const tensor = tf.tensor([messages[0].start_string, temperature]);
+    const choruses = fs.readFileSync('./taylor_swift_js/choruses.txt', 'utf-8');
+
+    const vocabSet = new Set(choruses);
+    const vocab = Array.from(vocabSet).sort();
+
+    const char2idx = {};
+    vocab.forEach((char, idx) => {
+      char2idx[char] = idx;
+    });
+
+    const idx2char = vocab;
+
     const startString = messages[0].start_string;
-    const charactersNumber = 300;
-    let song = [];
-    const vectorizedStartString = startString.split("").map((character) => character.charCodeAt(0));
-    const tensor = tf.expandDims(vectorizedStartString, 0);
-    console.log('Tensor: ', tensor);
-    // const predictions = model.predict(tensor);
-    song = selectSong(charactersNumber, startString);
+    const numGenerate = 300;
+    let inputEval = startString.split('').map(s => char2idx[s]);
+    inputEval = tf.tensor2d([inputEval]);
+    model.resetStates();
+
+    for (let i = 0; i < numGenerate; i++) {
+      const predictions = await model.predict(inputEval);
+      const predictionsSqueezed = predictions.squeeze();
+
+      const predictionsScaled = predictionsSqueezed.div(temperature);
+      const predictedId = tf.multinomial(predictionsScaled, 1).dataSync()[0];
+
+      inputEval = tf.tensor2d([[predictedId]]);
+
+      arr.push(idx2char[predictedId]);
+    }
+
+    const song = [startString];
+    let line = '';
+
+    for (const character of arr) {
+      if (character === '\n') {
+        if (line) {
+          song.push(line);
+        }
+        line = '';
+      } else {
+        line += character;
+      }
+    }
+
+    if (line) {
+      song.push(line);
+    }
+    console.log(song);
+
     return song;
   } catch (error) {
     console.log(error);
   }
-};
-
-const selectSong = (charactersNumber, startString) => {
-  const number = Math.round(Math.random() * 173);
-  const file = fs.readFileSync('./taylor_swift_js/lyrics.json');
-  const data = JSON.parse(file);
-  const song = data[number].lyrics;
-
-  let limitedSong = startString + '\n';
-  let count = 0;
-
-  for (const line of song.split('\n')) {
-    for (const character of line) {
-      if (count < charactersNumber) {
-        limitedSong += character;
-        ++count;
-      }
-    }
-    limitedSong += '\n';
-  }
-
-  const array = limitedSong.split('\n');
-  return array;
 };
 
 loadModel();
@@ -67,9 +88,9 @@ app.post('/api/taylorswift/generateSong', async (req, res) => {
     if (!model) {
       return res.status(500).send("Model not loaded yet");
     }
-    const arr = await generateText(config);
+    const song = await generateSong(config);
 
-    return res.status(200).send(arr);
+    return res.status(200).send(song);
   } catch (error) {
     console.log(error);
   }

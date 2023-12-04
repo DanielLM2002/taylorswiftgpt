@@ -27,19 +27,33 @@ const generateText = async (config) => {
     const tensor = tf.expandDims(vectorizedStartString, 0);
     console.log('Tensor: ', tensor);
     // const predictions = model.predict(tensor);
-    song = selectSong();
+    song = selectSong(charactersNumber, startString);
     return song;
   } catch (error) {
     console.log(error);
   }
 };
 
-const selectSong = () => {
+const selectSong = (charactersNumber, startString) => {
   const number = Math.round(Math.random() * 173);
   const file = fs.readFileSync('./taylor_swift_js/lyrics.json');
   const data = JSON.parse(file);
   const song = data[number].lyrics;
-  const array = song.split('\n');
+
+  let limitedSong = startString + '\n';
+  let count = 0;
+
+  for (const line of song.split('\n')) {
+    for (const character of line) {
+      if (count < charactersNumber) {
+        limitedSong += character;
+        ++count;
+      }
+    }
+    limitedSong += '\n';
+  }
+
+  const array = limitedSong.split('\n');
   return array;
 };
 

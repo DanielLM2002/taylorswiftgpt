@@ -19,7 +19,6 @@ const generateText = async (config) => {
       messages,
       temperature
     } = config;
-    model = await tf.loadLayersModel("file://./taylor_swift_js/model.json");
     const startString = 'lovely';
     const charactersNumber = 300;
     const song = [];

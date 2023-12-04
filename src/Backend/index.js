@@ -13,8 +13,24 @@ const loadModel = async () => {
   }
 };
 
-const generateText = (songModel, startString, temperature) => {
-
+const generateText = async (config) => {
+  try {
+    const {
+      messages,
+      temperature
+    } = config;
+    model = await tf.loadLayersModel("file://./taylor_swift_js/model.json");
+    const startString = 'lovely';
+    const charactersNumber = 300;
+    const song = [];
+    const vectorizedStartString = startString.split("").map((character) => character.charCodeAt(0));
+    const tensor = tf.expandDims(vectorizedStartString, 0);
+    console.log('Tensor: ', tensor);
+    const predictions = model.predict(tensor);
+    return song;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 loadModel();
@@ -27,7 +43,7 @@ app.post('/api/taylorswift/generateSong', (req, res) => {
     if (!model) {
       return res.status(500).send("Model not loaded yet");
     }
-    const arr = generateText(config.model, config.messages[0].start_string, config.temperature);
+    const arr = generateText(config);
     console.log(arr);
 
     return res.status(200).send([
@@ -40,5 +56,5 @@ app.post('/api/taylorswift/generateSong', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("Server is running at http://localhost:${PORT}");
+  console.log(`Server is running at http://localhost:${PORT}`);
 });

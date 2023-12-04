@@ -29,28 +29,23 @@ const generateSong = async (config) => {
     const vocab = Array.from(vocabSet).sort();
 
     const char2idx = {};
-    vocab.forEach((char, idx) => {
-      char2idx[char] = idx;
-    });
+    vocab.forEach((char, idx) => char2idx[char] = idx);
 
     const idx2char = vocab;
 
     const startString = messages[0].start_string;
-    const numGenerate = 300;
-    let inputEval = startString.split('').map(s => char2idx[s]);
-    inputEval = tf.tensor2d([inputEval]);
+    const limit = 300;
+    let vectorizedStartString = startString.split('').map(s => char2idx[s]);
+    vectorizedStartString = tf.tensor2d([vectorizedStartString]);
     model.resetStates();
 
-    for (let i = 0; i < numGenerate; i++) {
-      const predictions = await model.predict(inputEval);
-      const predictionsSqueezed = predictions.squeeze();
-
-      const predictionsScaled = predictionsSqueezed.div(temperature);
-      const predictedId = tf.multinomial(predictionsScaled, 1).dataSync()[0];
-
-      inputEval = tf.tensor2d([[predictedId]]);
-
-      arr.push(idx2char[predictedId]);
+    for (let i = 0; i < limit; i++) {
+      let predictions = await model.predict(vectorizedStartString);
+      predictions = predictions.squeeze();
+      predictions = predictions.div(temperature);
+      predictions = tf.multinomial(predictions, 1).dataSync()[0];
+      vectorizedStartString = tf.tensor2d([[predictions]]);
+      arr.push(idx2char[predictions]);
     }
 
     const song = [startString];

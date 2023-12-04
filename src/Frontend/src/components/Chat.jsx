@@ -12,7 +12,7 @@ import useDataBase from '../hooks/useDataBase';
 const Chat = () => {
   const bottomRef = useRef(null);
   const [message, setMessage] = useState('');
-  const { 
+  const {
     DataBaseContext: { loading, currentChat },
     addQuestion,
     addChat
@@ -20,13 +20,15 @@ const Chat = () => {
 
   const handleInput = (event) => {
     event.preventDefault();
-    if (currentChat === null) {
-      const chat = addChat();
-      addQuestion(chat.id, message);
-    } else {
-      addQuestion(currentChat.id, message);
+    if (message !== '') {
+      if (currentChat === null) {
+        const chat = addChat();
+        addQuestion(chat.id, message);
+      } else {
+        addQuestion(currentChat.id, message);
+      }
+      setMessage('');
     }
-    setMessage('');
   }
 
   const insertMessageContainer = () => {
@@ -46,20 +48,20 @@ const Chat = () => {
         if (loading) {
           chatContainer = (
             <div className='h-[81%] items-center justify-center overflow-y-scroll'>
-              { insertMessageContainer() }
+              {insertMessageContainer()}
               <div ref={bottomRef} />
               <div className='flex w-full my-4 px-10 2xl:px-[27%]'>
-                <Spin 
-                  indicator={<LoadingOutlined style={{ fontSize: 24, color: '#AE224C' }} spin />} 
+                <Spin
+                  indicator={<LoadingOutlined style={{ fontSize: 24, color: '#AE224C' }} spin />}
                 />
                 <h1 className='mx-3 font-bold'>TaylorSwiftGPT</h1>
               </div>
             </div>
-          ); 
+          );
         } else {
           chatContainer = (
             <div className='h-[81%] items-center justify-center overflow-y-scroll'>
-              { insertMessageContainer() }
+              {insertMessageContainer()}
               <div ref={bottomRef} />
             </div>
           );
@@ -69,8 +71,8 @@ const Chat = () => {
           chatContainer = (
             <div className='h-[81%] items-center justify-center overflow-y-scroll'>
               <div className='flex w-full my-4 px-10 2xl:px-[27%]'>
-                <Spin 
-                  indicator={<LoadingOutlined style={{ fontSize: 24, color: '#AE224C' }} spin />} 
+                <Spin
+                  indicator={<LoadingOutlined style={{ fontSize: 24, color: '#AE224C' }} spin />}
                 />
                 <h1 className='mx-3 font-bold'>TaylorSwiftGPT</h1>
               </div>
@@ -110,7 +112,7 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   });
 
   return (
@@ -118,16 +120,16 @@ const Chat = () => {
       <div className='flex h-16 w-full px-5 items-center sticky top-0 bg-[#343541]'>
         <h1 className='text-lg font-bold'>TaylorSwiftGPT</h1>
       </div>
-      { showChatMessages() }
+      {showChatMessages()}
       <div className='mt-5 px-5 2xl:px-[27%]'>
-        <form 
+        <form
           onSubmit={handleInput}
           className='w-full px-4 py-3 border border-[#464652] bg-[#343541] rounded-2xl transition duration-50 linear'
         >
-          <input 
+          <input
             className='w-[93%] 2xl:w-[94%] bg-[#343541] focus:outline-none'
             type='text'
-            value={message} 
+            value={message}
             placeholder='Message TaylorSwiftGPT...'
             onInput={(event) => setMessage(event.target.value)}
           />

@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const PORT = 4000;
 const tf = require("@tensorflow/tfjs-node");
+const fs = require('fs');
 let model;
 
 const loadModel = async () => {
@@ -19,36 +20,42 @@ const generateText = async (config) => {
       messages,
       temperature
     } = config;
-    const startString = 'lovely';
+    const startString = messages[0].start_string;
     const charactersNumber = 300;
-    const song = [];
+    let song = [];
     const vectorizedStartString = startString.split("").map((character) => character.charCodeAt(0));
     const tensor = tf.expandDims(vectorizedStartString, 0);
     console.log('Tensor: ', tensor);
-    const predictions = model.predict(tensor);
+    // const predictions = model.predict(tensor);
+    song = selectSong();
     return song;
   } catch (error) {
     console.log(error);
   }
 };
 
+const selectSong = () => {
+  const number = Math.round(Math.random() * 173);
+  const file = fs.readFileSync('./taylor_swift_js/lyrics.json');
+  const data = JSON.parse(file);
+  const song = data[number].lyrics;
+  const array = song.split('\n');
+  return array;
+};
+
 loadModel();
 app.use(express.json());
 app.use(cors());
 
-app.post('/api/taylorswift/generateSong', (req, res) => {
+app.post('/api/taylorswift/generateSong', async (req, res) => {
   try {
     const { config } = req.body;
     if (!model) {
       return res.status(500).send("Model not loaded yet");
     }
-    const arr = generateText(config);
-    console.log(arr);
+    const arr = await generateText(config);
 
-    return res.status(200).send([
-      "Thought I found a way,",
-      "Thought I found a way out (found)"
-    ]);
+    return res.status(200).send(arr);
   } catch (error) {
     console.log(error);
   }

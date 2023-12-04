@@ -124,7 +124,7 @@ const Chat = () => {
       <div className='mt-5 px-5 2xl:px-[27%]'>
         <form
           onSubmit={handleInput}
-          className='w-full px-4 py-3 border border-[#464652] bg-[#343541] rounded-2xl transition duration-50 linear'
+          className='w-full px-4 py-3 border-[1.5px] border-[#8d8d9f] bg-[#343541] rounded-2xl transition duration-50 linear'
         >
           <input
             className='w-[93%] 2xl:w-[94%] bg-[#343541] focus:outline-none'

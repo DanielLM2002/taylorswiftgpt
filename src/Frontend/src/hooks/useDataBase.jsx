@@ -43,6 +43,7 @@ const useDataBase = () => {
     newChats.push(newChat);
     setDataBaseContextState(CHATS, newChats);
     setDataBaseContextState(CURRENT_CHAT, newChat);
+    document.title = name ? name.slice(0, 26) : 'New chat';
     return newChat;
   };
 
@@ -59,6 +60,7 @@ const useDataBase = () => {
       setDataBaseContextState(LOADING, false);
     }, 1000);
     if (currentChat === null) {
+      document.title = content.slice(0, 26);
       const newChat = addChat(content);
       await setTimeout(() => {
         newChat.questions.push(newQuestion);

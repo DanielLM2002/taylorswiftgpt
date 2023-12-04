@@ -8,7 +8,7 @@ import useDataBase from '../hooks/useDataBase';
 
 const History = () => {
   const {
-    DataBaseContext: { chats },
+    DataBaseContext: { chats, currentChat },
     addChat
   } = useDataBase();
   const bottomRef = useRef(null);
@@ -18,6 +18,14 @@ const History = () => {
       bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [chats]);
+
+  useEffect(() => {
+    if (currentChat) {
+      document.title = currentChat.name;
+    } else {
+      document.title = 'TaylorSwiftGPT';
+    }
+  });
 
   return (
     <div className='w-full h-full max-w-[260px] bg-[#000000] px-3 py-3.5'>
